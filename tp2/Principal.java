@@ -1,7 +1,5 @@
 package tp2;
 
-import javax.swing.JFrame;
-
 public class Principal {
 	
 	static Usuario[] usuarios = crearUsuarios();
