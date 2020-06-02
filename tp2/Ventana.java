@@ -1,39 +1,37 @@
 package tp2;
-//import tp2.Usuario;
+
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.TextField;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
 
 public class Ventana extends JFrame implements ActionListener{
 	
-	private JLabel txtMenuCuentas,txtUserCtaCte,txtsaldoCtaCte,txtUserCA,
-	txtsaldoCA;
-	private JLabel txtUser, txtClave,txtSaldo;
+	private static final long serialVersionUID = 1L;
+	private JLabel txtMenuCuentas;
+	private JLabel txtUser, txtClave,txtSaldo,txtcuentas;
 	private JButton btnaceptar, btnborrar,btnsalir,btnvolver,btnsalir2;
-	private JTextField txtFUser,txtFcuentas;
+	private JTextField txtFUser;
 	private JPasswordField txtFClave;
 	private int cont = 0;
 	private Usuario[] usuariosCargados;
 	Usuario usuAceptado;
 	private JRadioButton rbCajaAhorro,rbCtaCte,rbSaldo,rbTransferencia,rbExtraccion,rbDeposito ;
-	//boolean usuEncontrado = false;
+	private ButtonGroup operacionesGroup, cuentasGroup;
 	
 	public void crearVentana() {
 		setLayout(null);
@@ -109,33 +107,33 @@ public class Ventana extends JFrame implements ActionListener{
 		}
         if ((rbCajaAhorro.isSelected()==true) && (rbTransferencia.isSelected()==true)) {
         	txtSaldo.setVisible(false);
-        	txtFcuentas.setVisible(false);
+        	txtcuentas.setVisible(false);
 			transferenciaCajaAhorro();
 			}
 		if ((rbCajaAhorro.isSelected()==true) && (rbExtraccion.isSelected()==true)) {
 			txtSaldo.setVisible(false);
-        	txtFcuentas.setVisible(false);
+			txtcuentas.setVisible(false);
 			extraccionCajaAhorro();
 			}
 		if ((rbCajaAhorro.isSelected()==true) && (rbDeposito.isSelected()==true)) {
 			txtSaldo.setVisible(false);
-        	txtFcuentas.setVisible(false);
+			txtcuentas.setVisible(false);
 			depositoCajaAhorro();
 			
 			}
 		if ((rbCtaCte.isSelected()==true) && (rbTransferencia.isSelected()==true)) {
 			txtSaldo.setVisible(false);
-        	txtFcuentas.setVisible(false);
+			txtcuentas.setVisible(false);
 			transferenciaCtaCte();
 			}
 		if ((rbCtaCte.isSelected()==true) && (rbExtraccion.isSelected()==true)) {
 			txtSaldo.setVisible(false);
-        	txtFcuentas.setVisible(false);
+			txtcuentas.setVisible(false);
 			extraccionCtaCte();
 			}
 		if ((rbCtaCte.isSelected()==true) && (rbDeposito.isSelected()==true)) {
 			txtSaldo.setVisible(false);
-        	txtFcuentas.setVisible(false);
+			txtcuentas.setVisible(false);
 			depositoCtaCte();
 			}
 		}
@@ -156,11 +154,11 @@ public class Ventana extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog( this, "Por favor llene todos los campos" ); }
 		
 		else if ( !txtFUser.getText().matches( "[A-Z][a-zA-Z0-9]{7,20}" ) ) {
-				JOptionPane.showMessageDialog( this, "Usuario inv·lido" );
+				JOptionPane.showMessageDialog( this, "Usuario inv√°lido" );
 				}
 		
 		else if ( ! (String.valueOf(txtFClave.getPassword())).matches( "[a-zA-Z0-9]{8}" )) {
-				JOptionPane.showMessageDialog( this, "Clave inv·lida" );
+				JOptionPane.showMessageDialog( this, "Clave inv√°lida" );
 				}
 		else error=false;
 		return error;		
@@ -181,7 +179,7 @@ public class Ventana extends JFrame implements ActionListener{
 			}
 		}
 		if(usuEncontrado == false){
-		   		JOptionPane.showMessageDialog(this, "Usuario o contraseÒa incorrecta");
+		   		JOptionPane.showMessageDialog(this, "Usuario o contrase√±a incorrecta");
 		   		txtFUser.setText("");
 		        txtFClave.setText("");
 		        cont=cont +1;
@@ -209,19 +207,20 @@ public class Ventana extends JFrame implements ActionListener{
 	private void menuCuentas() {
 		setLayout(null);
 		txtMenuCuentas = new JLabel("Menu Cuentas");
-		txtMenuCuentas.setBounds(10,0,100,30);
-		//txtMenuCuentas.setBackground(blue);
+		txtMenuCuentas.setBounds(10,0,400,20);
+		txtMenuCuentas.setBackground(Color.cyan);
+		txtMenuCuentas.setOpaque(true);
 		add(txtMenuCuentas);
-		//btnsalir.setBounds(10,200,90,30);
-		//btnsalir.setVisible(true);
 		
 		txtSaldo = new JLabel("Saldo");
-		txtSaldo.setBounds(250,10,100,30);
+		txtSaldo.setBounds(200,25,150,20);
+		txtSaldo.setBackground(Color.CYAN);
+		txtSaldo.setOpaque(true);
 		add(txtSaldo);
 		txtSaldo.setVisible(false);
 		
 		btnvolver = new JButton( "Volver" );
-		btnvolver.setBounds(110,200,100,30);
+		btnvolver.setBounds(130,200,100,30);
 		add( btnvolver );
 		btnvolver.addActionListener(this);
 		
@@ -229,23 +228,25 @@ public class Ventana extends JFrame implements ActionListener{
 		btnsalir2.setBounds(10,200,100,30);
 		add( btnsalir2 );
 		btnsalir2.addActionListener(this);
-		
-		txtFcuentas = new JTextField();
-		txtFcuentas.setBounds(200,50,180,30);
-		add( txtFcuentas );
-		txtFcuentas.setVisible(false);
+		repaint();
+		txtcuentas = new JLabel();
+		txtcuentas.setBounds(200,50,150,30);
+		txtcuentas.setBackground(Color.white);
+		txtcuentas.setOpaque(true);
+		add( txtcuentas );
+		txtcuentas.setVisible(false);
 				
 		Container containerCuentas = getContentPane();
 		containerCuentas.setLayout(null);
 				
 		rbCajaAhorro = new JRadioButton( "Caja de Ahorro", true );
-		rbCajaAhorro.setBounds(10, 20, 200, 20);
+		rbCajaAhorro.setBounds(10, 20, 170, 20);
 		containerCuentas.add( rbCajaAhorro );
 		rbCtaCte = new JRadioButton( "Cuenta Corriente", true );
 		rbCtaCte.setBounds(10, 40, 150, 20);
 		containerCuentas.add( rbCtaCte );
 		
-		ButtonGroup cuentasGroup = new ButtonGroup();
+		cuentasGroup = new ButtonGroup();
 		cuentasGroup.add( rbCajaAhorro );
 		cuentasGroup.add( rbCtaCte );
 		
@@ -264,7 +265,7 @@ public class Ventana extends JFrame implements ActionListener{
 		rbDeposito.setBounds(10, 140, 200, 20);
 		containerOperaciones.add( rbDeposito );
 		
-		ButtonGroup operacionesGroup = new ButtonGroup();
+		operacionesGroup = new ButtonGroup();
 		operacionesGroup.add( rbSaldo );
 		operacionesGroup.add( rbTransferencia );
 		operacionesGroup.add( rbExtraccion );
@@ -281,8 +282,7 @@ public class Ventana extends JFrame implements ActionListener{
 	private void transferenciaCajaAhorro() {
 		boolean enc = false;
 		boolean salir = false;
-		String s= usuAceptado.getSaldoCajaAhorro();
-		//JOptionPane.showMessageDialog(this, "Su saldo disponible es: "+s);
+		int s= Integer.parseInt(usuAceptado.getSaldoCajaAhorro());
 		while (salir ==false) {
 		String cuenta = JOptionPane.showInputDialog(this, "Su saldo disponible es:"+ s+ "\n Ingrese la cuenta a que quiere transferir:");
 		for(int i=0 ; i<usuariosCargados.length ; i++) {
@@ -291,11 +291,9 @@ public class Ventana extends JFrame implements ActionListener{
 				enc = true; }}
 		
 			if (enc==true) {	
-			String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero:");
-			int d = Integer.parseInt(dinero);
-			Integer sa= Integer.parseInt(s);
-			if (d <= sa) {
-				usuAceptado.actualizarCAMenos(d);
+			int dinero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el dinero:"));
+			if (dinero <= s) {
+				usuAceptado.actualizarCAMenos(dinero);
 				JOptionPane.showMessageDialog(this, "Transferencia realizada \n Saldo Disponible: "+usuAceptado.getSaldoCajaAhorro());
 			}
 			else {
@@ -310,119 +308,126 @@ public class Ventana extends JFrame implements ActionListener{
 		
 			
 	}
-	private void extraccionCajaAhorro() {
+	
+    private void extraccionCajaAhorro() {
+		boolean salir = false;
 		rbCajaAhorro.setSelected(false);	
 		rbExtraccion.setSelected(false);
 		String s= usuAceptado.getSaldoCajaAhorro();
+		while (salir==false) {
 		JOptionPane.showMessageDialog(this, "Su saldo disponible es: "+s);
-		String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero de extracciÛn:");
+		String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero de extracci√≥n: ");
 		int d = Integer.parseInt(dinero);
 		Integer sa= Integer.parseInt(s);
 		if (d <= sa) {
 			usuAceptado.actualizarCAMenos(d);
-				JOptionPane.showMessageDialog(this, "Extraccion realizada con Èxito \n Saldo Disponible: "+usuAceptado.getSaldoCajaAhorro());
+				JOptionPane.showMessageDialog(this, "Extraccion realizada con √©xito \n Saldo Disponible: "+usuAceptado.getSaldoCajaAhorro());
 			}
 		else {
 				JOptionPane.showMessageDialog(this, "Su saldo es insuficiente para realizar esta extraccion");
 			}
-		
+		salir=true;
+		}
 		}
 
 		
 	private void depositoCajaAhorro() {
+		boolean salir = false;
 		String s= usuAceptado.getSaldoCajaAhorro();
-		JOptionPane.showMessageDialog(this, "Su saldo disponible es: "+s);
-		String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero que desea depositar:");
-		int d = Integer.parseInt(dinero);
-		usuAceptado.actualizarCAMas(d);
-		JOptionPane.showMessageDialog(this, "Deposito realizado con Èxito \n Saldo Disponible: "+usuAceptado.getSaldoCajaAhorro());
-		rbCajaAhorro.setSelected(false);
-		rbDeposito.setSelected(false);
+		while (salir ==false) {
+		int dinero =  Integer.parseInt(JOptionPane.showInputDialog(this,"Su saldo disponible es: "+s+ "\n Ingrese el dinero que desea depositar: "));
+		usuAceptado.actualizarCAMas(dinero);
+		JOptionPane.showMessageDialog(this, "Deposito realizado con √©xito \n Saldo Disponible: "+usuAceptado.getSaldoCajaAhorro());
+		salir=true;
+	    }
+		
 	}
 	
 	private void transferenciaCtaCte() {
 		boolean enc2 = false;
-		String s= usuAceptado.getSaldoCtaCte();
-		JOptionPane.showMessageDialog(this, "Su saldo disponible es: "+s);
-		String cuenta = JOptionPane.showInputDialog(this, "Ingrese la cuenta a que quiere transferir:");
+		int s= Integer.parseInt(usuAceptado.getSaldoCtaCte());
+		boolean salir = false;
+		while (salir==false) {
+		String cuenta = JOptionPane.showInputDialog(this, "Su saldo disponible es: "+ s+ "\n Ingrese la cuenta a que quiere transferir:");
 		for(int i=0 ; i<usuariosCargados.length ; i++) {
 			if ((cuenta.equals(usuariosCargados[i].getNroCtaCte())) || cuenta.equals(usuariosCargados[i].getCajaAhorro()))
 			{
 				enc2 = true; }}
 		if (enc2==true) {	
-			String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero:");
-			int d = Integer.parseInt(dinero);
-			Integer sa= Integer.parseInt(s);
-			if (d <= sa) {
-				usuAceptado.actualizarCCMenos(d);
+			int dinero = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el dinero:"));
+			if (dinero <= s) {
+				usuAceptado.actualizarCCMenos(dinero);
 				JOptionPane.showMessageDialog(this, "Transferencia realizada \n Saldo Disponible: "+usuAceptado.getSaldoCtaCte());
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Su saldo es insuficiente para realizar esta transferencia");
+				JOptionPane.showMessageDialog(this, "Su saldo es insuficiente para realizar esta transferencia ");
 			}
 				
 		}
 		else if (enc2==false) {
 			JOptionPane.showMessageDialog(this, "Usuario no encontrado");
 		}
-		rbCtaCte.setSelected(false);
-		rbTransferencia.setSelected(false);
+		salir=true;
+		}
 	}
-	private void extraccionCtaCte() {
-		String s= usuAceptado.getSaldoCtaCte();
-		JOptionPane.showMessageDialog(this, "Su saldo disponible es: "+s);
-		String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero de extracciÛn:");
-		int d = Integer.parseInt(dinero);
-		Integer sa= Integer.parseInt(s);
-		if (d <= sa) {
-			usuAceptado.actualizarCCMenos(d);
-				JOptionPane.showMessageDialog(this, "Extraccion realizada con Èxito \n Saldo Disponible: "+usuAceptado.getSaldoCtaCte());
+	
+    private void extraccionCtaCte() {
+		int s= Integer.parseInt( usuAceptado.getSaldoCtaCte());
+		boolean salir=false;
+		while (salir==false) {
+		int dinero = Integer.parseInt(JOptionPane.showInputDialog(this, "Su saldo disponible es: "+s+"\n Ingrese el dinero de extracci√≥n:"));
+		if (dinero <= s) {
+			usuAceptado.actualizarCCMenos(dinero);
+				JOptionPane.showMessageDialog(this, "Extraccion realizada con √©xito \n Saldo Disponible: "+usuAceptado.getSaldoCtaCte());
 			}
 		else {
 				JOptionPane.showMessageDialog(this, "Su saldo es insuficiente para realizar esta extraccion");
 			}
-				
+		salir=true;	
+		}
 		}
 		
 	
 	private void depositoCtaCte() {
+		boolean salir = false;
+		while (salir ==false) {
 		String s= usuAceptado.getSaldoCtaCte();
-		JOptionPane.showMessageDialog(this, "Su saldo disponible es: "+s);
-		String dinero = JOptionPane.showInputDialog(this, "Ingrese el dinero que desea depositar:");
-		int d = Integer.parseInt(dinero);
-		usuAceptado.actualizarCCMas(d);
-		JOptionPane.showMessageDialog(this, "Deposito realizado con Èxito \n Saldo Disponible: "+usuAceptado.getSaldoCtaCte());
-		rbCtaCte.setSelected(false);
-		rbDeposito.setSelected(false);
+		int dinero = Integer.parseInt(JOptionPane.showInputDialog(this, "Su saldo disponible es: "+s+"\n Ingrese el dinero que desea depositar:"));
+		usuAceptado.actualizarCCMas(dinero);
+		JOptionPane.showMessageDialog(this, "Deposito realizado con √©xito \n Saldo Disponible: "+usuAceptado.getSaldoCtaCte());
+		salir=true;}
 	}
 		
 	
 	private void mostrarSaldoCA() {
 		txtSaldo.setVisible(true);
-		txtFcuentas.setVisible(true);
-		txtFcuentas.setText(null);
+		txtcuentas.setVisible(true);
+		txtcuentas.setText(null);
 		String s = usuAceptado.getSaldoCajaAhorro();
-		txtFcuentas.setText(s);
+		txtcuentas.setText(s);
 		
 	}
 	private void mostrarSaldoCC() {
 		txtSaldo.setVisible(true);
-		txtFcuentas.setVisible(true);
-		txtFcuentas.setText(null);
+		txtcuentas.setVisible(true);
+		txtcuentas.setText(null);
 		String s = usuAceptado.getSaldoCtaCte();
-		txtFcuentas.setText(s);
+		txtcuentas.setText(s);
 		
 	}
 
 	private void deshabilitarMenuCuentas() {
+		txtSaldo.setOpaque(false);
+		txtcuentas.setOpaque(false);
 		txtSaldo.setText(null);
 		btnsalir2.setVisible(false);
 		btnvolver.setVisible(false);
+		txtcuentas.setText(null);;
+		txtMenuCuentas.setVisible(false);
 		txtFClave.setText(null);
 		txtFUser.setText(null);
-		//txtFcuentas.setText(null);
-		//txtFcuentas.setVisible(false);
-		txtMenuCuentas.setVisible(false);
+		operacionesGroup.clearSelection();
+		cuentasGroup.clearSelection();
 		rbCajaAhorro.setVisible(false);
 		rbCtaCte.setVisible(false);
 		rbDeposito.setVisible(false);
@@ -430,16 +435,9 @@ public class Ventana extends JFrame implements ActionListener{
 		rbSaldo.setVisible(false);
 		rbTransferencia.setVisible(false);
 		
+		
 	}
-	private void habilitarMenuPrincipal() {
-		txtClave.setVisible(true);
-    	txtFClave.setVisible(true);
-    	txtUser.setVisible(true);
-    	txtFUser.setVisible(true);
-    	btnaceptar.setVisible(true);
-    	btnborrar.setVisible(true);
-    	btnsalir.setVisible(true);
-	}
+	
 }
 
 
