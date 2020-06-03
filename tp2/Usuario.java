@@ -91,4 +91,13 @@ public class Usuario {
 		int valorNuevo = Integer.parseInt(this.getSaldoCtaCte()) + n;
 		this.setSaldoCtaCte(String.valueOf(valorNuevo));
 	}
+	public static Usuario[] inicializarUsuarios() {
+		Usuario[] users = {
+	   			 new Usuario("Sofia1234", "passwor1", "100", "500", "123", "850"),
+	   			 new Usuario("Dolores1234", "passwor2", "200", "700", "456", "470"),
+	   			 new Usuario("Camila1234", "passwor3", "300", "900", "789", "788"),
+	   			 new Usuario("Patricia1234", "passwor4", "400", "1250", "444", "999")
+	   			};
+    	return users;
+    }
 }
