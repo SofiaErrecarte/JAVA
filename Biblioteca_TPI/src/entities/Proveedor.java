@@ -37,4 +37,8 @@ public class Proveedor {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	} 
+	@Override
+	public String toString() {
+		return "Proveedor [CUIT=" + CUIT + ", Razon Social=" + razonSocial + ", E-Mail=" + mail + ", Dirección" + direccion+ ", Teléfono=" + telefono+ "]";
+	}
 }
