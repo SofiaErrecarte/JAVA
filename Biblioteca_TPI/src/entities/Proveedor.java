@@ -1,12 +1,21 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class Proveedor {
 	private String razonSocial;
 	private String CUIT;
 	private String telefono;
 	private String mail;
 	private String direccion;
+	private ArrayList<Libro> librosP;
 	
+	public ArrayList<Libro> getLibrosP() {
+		return librosP;
+	}
+	public void setLibrosP(ArrayList<Libro> librosP) {
+		this.librosP = librosP;
+	}
 	public String getRazonSocial() {
 		return razonSocial;
 	}
