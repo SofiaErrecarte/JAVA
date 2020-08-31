@@ -1,29 +1,30 @@
-package entities;
+package logic;
 
-import java.util.Date;
+import java.util.LinkedList;
 
-public class LineaPrestamo {
-	private int idLineaPrestamo;
-	private Date fechaDevolucion;
-	private Boolean devuelto;
-	
-	public int getIdLineaPrestamo() {
-		return idLineaPrestamo;
+import data.DataPoliticaPrestamo;
+import entities.Persona;
+import entities.PoliticaPrestamo;
+
+public class PoliticaPrestamoController {
+	private DataPoliticaPrestamo dpp;
+	public PoliticaPrestamoController() {
+		dpp=new DataPoliticaPrestamo();
 	}
-	public void setIdLineaPrestamo(int idLineaPrestamo) {
-		this.idLineaPrestamo = idLineaPrestamo;
+	public LinkedList<PoliticaPrestamo> ppGetAll(){
+		return dpp.getAll();
 	}
-	public Date getFechaDevolucion() {
-		return fechaDevolucion;
-	}
-	public void setFechaDevolucion(Date fechaDevolucion) {
-		this.fechaDevolucion = fechaDevolucion;
-	}
-	public Boolean getDevuelto() {
-		return devuelto;
-	}
-	public void setDevuelto(Boolean devuelto) {
-		this.devuelto = devuelto;
+	public PoliticaPrestamo newPolitica(PoliticaPrestamo pp) {
+		return dpp.add(pp);
 	}
 	
+	public PoliticaPrestamo getByIdPolitica (PoliticaPrestamo pp) {
+		return dpp.getById(pp);
+	}
+	public PoliticaPrestamo editPolitica (PoliticaPrestamo pp) {
+		return dpp.editPolitica(pp);
+	}
+	public PoliticaPrestamo deletePoliticaPrestamo (PoliticaPrestamo pp) {
+		return dpp.deletePolitica(pp);
+	}
 }
