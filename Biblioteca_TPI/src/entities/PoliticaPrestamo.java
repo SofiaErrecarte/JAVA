@@ -1,8 +1,27 @@
 package entities;
 
+import java.sql.Date;
+
 public class PoliticaPrestamo {
+	private int idPoliticaPrestamo;
+	private Date fechaAlta;
 	private int cantMaximaSocio;
 	private int cantMaximaNoSocio;
+	
+	
+	public int getIdPoliticaPrestamo() {
+		return idPoliticaPrestamo;
+	}
+	public void setIdPoliticaPrestamo(int idPoliticaPrestamo) {
+		this.idPoliticaPrestamo = idPoliticaPrestamo;
+	}
+	
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+	public void setFechaAlta(Date date) {
+		this.fechaAlta = (Date) date;
+	}
 	public int getCantMaximaSocio() {
 		return cantMaximaSocio;
 	}
@@ -14,5 +33,9 @@ public class PoliticaPrestamo {
 	}
 	public void setCantMaximaNoSocio(int cantMaximaNoSocio) {
 		this.cantMaximaNoSocio = cantMaximaNoSocio;
+	}
+	public String toString() {
+		return "\nPolitica [id=" + idPoliticaPrestamo + ", Cantidad maxima por socio:" + cantMaximaSocio + ", Cantidad maxima no socio: "+
+				cantMaximaNoSocio+", Fecha alta:"+fechaAlta+"]";
 	}
 }
