@@ -17,7 +17,7 @@ public class MenuLibro {
 		s = new Scanner(System.in);
 		String command;
 		do {
-			System.out.print("------------------------------------------------------------------------------- \nMENÚ\n");
+			System.out.print("------------------------------------------------------------------------------- \nMENÃš\n");
 			command=getCommand();
 			executeCommand(command);
 			System.out.println();
@@ -37,7 +37,7 @@ public class MenuLibro {
 			System.out.println(ctrlLibro.getAllLibros());
 			break;
 		case "search":
-			System.out.print("------------------------------------------------------------------------------- \nBÚSQUEDA POR ID LIBRO\n");
+			System.out.print("------------------------------------------------------------------------------- \nBÃšSQUEDA POR ID LIBRO\n");
 			System.out.println(getByIdLibro());
 			break;
 		case "edit":
@@ -63,14 +63,14 @@ public class MenuLibro {
 			lib=getByIdLibro();
 		}
 		System.out.println("Libro que desea eliminar: "+lib);
-		System.out.println("Está seguro que desea elminar a este Libro? si / no: ");
+		System.out.println("EstÃ¡ seguro que desea elminar a este Libro? si / no: ");
 		switch(s.nextLine()) {
 		case "no":
 			System.out.println("Libro no eliminado.");
 			break;
 		case "si":
 			ctrlLibro.deleteLibro(lib);
-			System.out.println("El Libro fue eliminado con éxito!");
+			System.out.println("El Libro fue eliminado con Ã©xito!");
 		}
 		
 	}
@@ -87,19 +87,19 @@ public class MenuLibro {
 		System.out.println("Libro que desea editar: "+lib);
 		System.out.print("Ingrese el nuevo ISBN: ");
 		lib.setIsbn(Integer.parseInt(s.nextLine()));
-		System.out.print("Ingrese el título: ");
+		System.out.print("Ingrese el tÃ­tulo: ");
 		lib.setTitulo(s.nextLine());
-		/*System.out.print("Ingrese la nueva fecha de edición: ");
+		/*System.out.print("Ingrese la nueva fecha de ediciÃ³n: ");
 		try {
 			lib.setFechaEdicion(formato.parse(s.nextLine()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} */
-		System.out.print("Ingrese el nuevo número de edición: ");
+		System.out.print("Ingrese el nuevo nÃºmero de ediciÃ³n: ");
 		lib.setNroEdicion(Integer.parseInt(s.nextLine()));
-		System.out.print("Ingrese la nueva cantidad de días máxima de préstamo : ");
+		System.out.print("Ingrese la nueva cantidad de dÃ­as mÃ¡xima de prÃ©stamo : ");
 		lib.setCantDiasMaxPrestamo(Integer.parseInt(s.nextLine()));
-		System.out.print("Ingrese el nuevo género: ");
+		System.out.print("Ingrese el nuevo gÃ©nero: ");
 		lib.setGenero(s.nextLine());
 		System.out.println("---------------Listado de proveeores disponibles---------------");
 		System.out.println(ctrlProv.getAllProveedores());
@@ -116,13 +116,13 @@ public class MenuLibro {
 		System.out.println("Proveedor escogido:"+p);
 		lib.setCUIT(p.getCUIT());
 		ctrlLibro.editLibro(lib);
-		System.out.println("Los datos fueron editados con éxito!");
+		System.out.println("Los datos fueron editados con Ã©xito!");
 		System.out.print("Libro: "+lib);
 	}
 	
 	
 	private String getCommand() {
-		System.out.println("Ingrese el comando según la opción que desee realizar");
+		System.out.println("Ingrese el comando segÃºn la opciÃ³n que desee realizar");
 		System.out.println("new\t\tNuevo Libro");
 		System.out.println("list\t\tListar Libros");
 		System.out.println("search\t\tBuscar Libros");
@@ -148,19 +148,19 @@ public class MenuLibro {
 		lib.setFechaEdicion(new Date());
 		System.out.print("Ingrese el ISBN: ");
 		lib.setIsbn(Integer.parseInt(s.nextLine()));
-		System.out.print("Ingrese el título: ");
+		System.out.print("Ingrese el tÃ­tulo: ");
 		lib.setTitulo(s.nextLine());
-		/*System.out.print("Ingrese la fecha de edición: ");
+		/*System.out.print("Ingrese la fecha de ediciÃ³n: ");
 		try {
 			lib.setFechaEdicion(formato.parse(s.nextLine()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}*/
-		System.out.print("Ingrese el número de edición: ");
+		System.out.print("Ingrese el nÃºmero de ediciÃ³n: ");
 		lib.setNroEdicion(Integer.parseInt(s.nextLine()));
-		System.out.print("Ingrese la cantidad de días máxima de préstamo : ");
+		System.out.print("Ingrese la cantidad de dÃ­as mÃ¡xima de prÃ©stamo : ");
 		lib.setCantDiasMaxPrestamo(Integer.parseInt(s.nextLine()));
-		System.out.print("Ingrese el género: ");
+		System.out.print("Ingrese el gÃ©nero: ");
 		lib.setGenero(s.nextLine());
 		System.out.println("---------------Listado de proveeores disponibles---------------");
 		System.out.println(ctrlProv.getAllProveedores());
@@ -175,11 +175,81 @@ public class MenuLibro {
 		}
 		
 		System.out.println("Proveedor escogido:"+p);
-		// listar prov, pedir cuit, verificar con el getBy, y añadir al arreglo de proveedores
+		// listar prov, pedir cuit, verificar con el getBy, y aÃ±adir al arreglo de proveedores
 		lib.setCUIT(p.getCUIT());
 		ctrlLibro.createLibro(lib);
-		System.out.println("\nEl Libro fue ingresado con éxito!");
+		System.out.println("\nEl Libro fue ingresado con Ã©xito!");
 		return lib;
+	}
+	private LinkedList<Ejemplar> getByLibro(){
+		Libro l = new Libro();
+		System.out.println(ctrlLibro.getAllLibros());
+		System.out.println("Ingrese el id del libro:");
+		l.setIdLibro(Integer.parseInt(s.nextLine()));
+		Libro lib = ctrlLibro.getByIdLibro(l);
+		while (lib==null) {
+			System.out.println("Libro inexistente. Ingrese el id del Libro: ");
+			lib = ctrlLibro.getByIdLibro(l);
+		}
+		return ctrlEj.getByIdLibro(lib);
+	} 
+	private Ejemplar newEjemplar() {
+		System.out.println();
+		Ejemplar ej = new Ejemplar();
+		Libro l = new Libro();
+		System.out.println(ctrlLibro.getAllLibros());
+		System.out.println("Ingrese el id del Libro");
+		l.setIdLibro(Integer.parseInt(s.nextLine()));
+		l =ctrlLibro.getByIdLibro(l);
+		while (l==null) {
+			System.out.println("Libro inexistente. Ingrese el id del Libro: ");
+			l=new Libro();
+			l.setIdLibro(Integer.parseInt(s.nextLine()));
+			l = ctrlLibro.getByIdLibro(l);
+		}
+		ej.setIdLibro(l.getIdLibro());
+		ctrlEj.newEjemplar(ej);
+		System.out.println("Ejemplar agregado con exito!");
+		return ej;
+	}
+	private void deleteEjemplar() {
+		System.out.println();
+		Ejemplar ej = new Ejemplar();
+		Libro l = new Libro();
+		LinkedList<Ejemplar> ejemplares =new LinkedList<>();
+		System.out.println(ctrlLibro.getAllLibros());
+		System.out.println("Ingrese el id del Libro");
+		l.setIdLibro(Integer.parseInt(s.nextLine()));
+		l =ctrlLibro.getByIdLibro(l);
+		while (l==null) {
+			System.out.println("Libro inexistente. Ingrese el id del Libro: ");
+			l=new Libro();
+			l.setIdLibro(Integer.parseInt(s.nextLine()));
+			l = ctrlLibro.getByIdLibro(l);
+		}
+		System.out.println(ctrlEj.getByIdLibro(l));
+		System.out.println("Ingrese el ejemplar a eliminar:");
+		ej.setIdEjemplar(Integer.parseInt(s.nextLine()));
+		System.out.println("Ejemplar a eliminar:"+ej);
+		System.out.println("Del libro"+l.getTitulo());
+		System.out.println("EstÃ¡ seguro que desea elminar este ejemplar? si / no: ");
+		switch(s.nextLine()) {
+		case "no":
+			System.out.println("Ejemplar no eliminado.");
+			break;
+		case "si":
+			ctrlEj.deleteEjemplar(ej);
+			System.out.println("Ejemplar eliminado con Ã©xito!");
+		}
+		
+	}
+	private Ejemplar getByIdEjemplar () {
+		Ejemplar ej = new Ejemplar();
+		System.out.println(ctrlEj.getAllEjemplares());
+		System.out.println("Ingrese el id del ejemplar:");
+		ej.setIdEjemplar(Integer.parseInt(s.nextLine()));
+		ctrlEj.getByIdEjemplar(ej);
+		return ej;
 	}
 
 }
