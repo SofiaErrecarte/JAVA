@@ -184,7 +184,7 @@ public class DataLibro {
 		return lib;
 	}
 	
-	public LinkedList<Ejemplar> getAll(){
+	public LinkedList<Ejemplar> getAllEjemplares(){
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Ejemplar> ejemplares= new LinkedList<>();
@@ -220,7 +220,7 @@ public class DataLibro {
 		return ejemplares;
 	}
 
-	public LinkedList<Ejemplar> getByIdLibro(Libro lib) {
+	public LinkedList<Ejemplar> getEjByIdLibro(Libro lib) {
 		Ejemplar ej =null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
@@ -315,7 +315,7 @@ public class DataLibro {
 		
 	}
 
-	public Ejemplar getByIdEjemplar(Ejemplar ej) {
+	/*public Ejemplar getByIdEjemplar(Ejemplar ej) {
 		Ejemplar ejemp = null;
 		DataLibro dl = new DataLibro();
 		PreparedStatement stmt=null;
@@ -348,7 +348,7 @@ public class DataLibro {
 		}
 		
 		return ejemp;
-	}
+	}*/
 	
 	
 		
