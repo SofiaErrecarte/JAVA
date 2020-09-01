@@ -3,6 +3,7 @@ package ui;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Scanner;
 import entities.*;
 import logic.*;
@@ -191,7 +192,7 @@ public class MenuLibro {
 			System.out.println("Libro inexistente. Ingrese el id del Libro: ");
 			lib = ctrlLibro.getByIdLibro(l);
 		}
-		return ctrlEj.getByIdLibro(lib);
+		return ctrlLibro.getEjByIdLibro(lib);
 	} 
 	private Ejemplar newEjemplar() {
 		System.out.println();
@@ -208,7 +209,7 @@ public class MenuLibro {
 			l = ctrlLibro.getByIdLibro(l);
 		}
 		ej.setIdLibro(l.getIdLibro());
-		ctrlEj.newEjemplar(ej);
+		ctrlLibro.newEjemplar(ej);
 		System.out.println("Ejemplar agregado con exito!");
 		return ej;
 	}
@@ -227,7 +228,7 @@ public class MenuLibro {
 			l.setIdLibro(Integer.parseInt(s.nextLine()));
 			l = ctrlLibro.getByIdLibro(l);
 		}
-		System.out.println(ctrlEj.getByIdLibro(l));
+		System.out.println(ctrlLibro.getByIdLibro(l));
 		System.out.println("Ingrese el ejemplar a eliminar:");
 		ej.setIdEjemplar(Integer.parseInt(s.nextLine()));
 		System.out.println("Ejemplar a eliminar:"+ej);
@@ -238,18 +239,18 @@ public class MenuLibro {
 			System.out.println("Ejemplar no eliminado.");
 			break;
 		case "si":
-			ctrlEj.deleteEjemplar(ej);
+			ctrlLibro.deleteEjemplar(ej);
 			System.out.println("Ejemplar eliminado con éxito!");
 		}
 		
 	}
-	private Ejemplar getByIdEjemplar () {
+	/*private Ejemplar getByIdEjemplar () {
 		Ejemplar ej = new Ejemplar();
-		System.out.println(ctrlEj.getAllEjemplares());
+		System.out.println(ctrlLibro.getAllEjemplares());
 		System.out.println("Ingrese el id del ejemplar:");
 		ej.setIdEjemplar(Integer.parseInt(s.nextLine()));
-		ctrlEj.getByIdEjemplar(ej);
+		ctrlLibro.getByIdEjemplar(ej);
 		return ej;
-	}
+	}*/
 
 }
