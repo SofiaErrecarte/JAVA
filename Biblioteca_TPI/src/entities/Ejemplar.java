@@ -30,18 +30,7 @@ public class Ejemplar {
 		this.idLineaPrestamo = idLineaPrestamo;
 	}
 	
-	public void addLibro(Libro l) {
-		lib=l;
-	}
-
-	public Libro getLib() {
-		return lib;
-	}
-
-	public void setLib(Libro lib) {
-		this.lib = lib;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Ejemplar [Id Ejemplar=" + idEjemplar + ", Id Libro=" + idLibro + ", id LineaPrestamo=" + idLineaPrestamo +"]";
