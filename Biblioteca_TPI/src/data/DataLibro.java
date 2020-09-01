@@ -184,6 +184,172 @@ public class DataLibro {
 		return lib;
 	}
 	
+	public LinkedList<Ejemplar> getAll(){
+		Statement stmt=null;
+		ResultSet rs=null;
+		LinkedList<Ejemplar> ejemplares= new LinkedList<>();
+		
+		try {
+			stmt= DbConnector.getInstancia().getConn().createStatement();
+			rs= stmt.executeQuery("select idEjemplar, idLibro, idLineaPrestamo from ejemplar");
+			//intencionalmente no se recupera la password
+			if(rs!=null) {
+				while(rs.next()) {
+					Ejemplar ej = new Ejemplar();
+					ej.setIdEjemplar(rs.getInt("idEjemplar"));
+					ej.setIdLibro(rs.getInt("idLibro"));
+					ej.setIdLineaPrestamo(rs.getInt("idLineaPrestamo"));
+					ejemplares.add(ej);
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return ejemplares;
+	}
+
+	public LinkedList<Ejemplar> getByIdLibro(Libro lib) {
+		Ejemplar ej =null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		LinkedList<Ejemplar> ejemplares = new LinkedList<>();
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select idEjemplar,idLibro,idLineaPrestamo from ejemplar where idLibro=?"
+					);
+			stmt.setLong(1, lib.getIdLibro());
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+				ej = new Ejemplar();
+				ej.setIdEjemplar(rs.getInt("idEjemplar"));
+				ej.setIdLibro(rs.getInt("idLibro"));
+				ej.setIdLineaPrestamo(rs.getInt("idLineaPrestamo"));
+				ejemplares.add(ej);
+			}}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return ejemplares;
+	}
+
+	public Ejemplar addEjemplar(Ejemplar ej) {
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"INSERT INTO `biblioteca`.`ejemplar` ( `idLibro`) VALUES(?)",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+			stmt.setLong(1, ej.getIdLibro());
+
+            stmt.executeUpdate();
+			
+			keyResultSet=stmt.getGeneratedKeys();
+            if(keyResultSet!=null && keyResultSet.next()){
+                ej.setIdEjemplar(keyResultSet.getInt(1));
+            }
+
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		
+		return ej;
+    }
+
+	public Ejemplar deleteEjemplar(Ejemplar ej) {
+		PreparedStatement stmt= null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().
+					prepareStatement(
+							"DELETE FROM `biblioteca`.`ejemplar` WHERE (`idEjemplar` = ?);",
+							PreparedStatement.RETURN_GENERATED_KEYS
+							);
+			stmt.setLong(1, ej.getIdEjemplar());
+			stmt.executeUpdate();	
+			
+            
+		}  catch (SQLException e) {
+            e.printStackTrace();
+		} finally {
+            try {
+                if(keyResultSet!=null)keyResultSet.close();
+                if(stmt!=null)stmt.close();
+                DbConnector.getInstancia().releaseConn();
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+		}
+		return ej;
+		
+	}
+
+	public Ejemplar getByIdEjemplar(Ejemplar ej) {
+		Ejemplar ejemp = null;
+		DataLibro dl = new DataLibro();
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=DbConnector.getInstancia().getConn().prepareStatement(
+					"select idEjemplar,idLibro,idLineaPrestamo from ejemplar where idEjemplar=?"
+					);
+			stmt.setLong(1, ej.getIdEjemplar());
+			rs=stmt.executeQuery();
+			if(rs!=null) {
+				while(rs.next()) {
+				ejemp = new Ejemplar();
+				dl.setLibro(ejemp);
+				ejemp.setIdEjemplar(rs.getInt("idEjemplar"));
+				ejemp.getLib().setIdLibro(rs.getInt("idLibro"));
+				ejemp.setIdLineaPrestamo(rs.getInt("idLineaPrestamo"));
+				
+			}}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(stmt!=null) {stmt.close();}
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return ejemp;
+	}
+	
 	
 		
 	
