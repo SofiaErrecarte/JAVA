@@ -33,6 +33,28 @@ public class LibroController {
 	public Libro deleteLibro(Libro lib) {
 		return dl.deleteLibro(lib);
 	}
+	public EjemplarController() {
+		de=new DataEjemplar();
+	}
+	public LinkedList<Ejemplar> getByIdLibro (Libro lib) {
+		return de.getByIdLibro(lib);
+	}
+	
+	public Ejemplar newEjemplar(Ejemplar ej) {
+		return de.addEjemplar(ej);
+	}
+	
+	public Ejemplar deleteEjemplar(Ejemplar ej) {
+		return de.deleteEjemplar(ej);		
+	}
+	
+	public LinkedList<Ejemplar> getAllEjemplares(){
+		return de.getAll();
+	}
+	
+	public Ejemplar getByIdEjemplar(Ejemplar ej) {
+		return de.getByIdEjemplar(ej);
+	}
 	
 	
 }
