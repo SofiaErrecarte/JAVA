@@ -1,6 +1,7 @@
 package entities;
+import java.util.*;
 
-import java.sql.Date;
+//import java.sql.Date;
 
 public class PoliticaPrestamo {
 	private int idPoliticaPrestamo;
@@ -20,7 +21,7 @@ public class PoliticaPrestamo {
 		return fechaAlta;
 	}
 	public void setFechaAlta(Date date) {
-		this.fechaAlta = (Date) date;
+		this.fechaAlta = date;
 	}
 	public int getCantMaximaSocio() {
 		return cantMaximaSocio;
