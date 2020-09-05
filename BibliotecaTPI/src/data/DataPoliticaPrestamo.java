@@ -55,7 +55,8 @@ public class DataPoliticaPrestamo {
 							"insert into politica_prestamo(fechaAlta,cantMaximaSocio,cantMaximaNoSocio) values(?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
-			stmt.setDate(1, (Date) pp.getFechaAlta());
+			//stmt.setDate(1, (Date) pp.getFechaAlta());
+			stmt.setTimestamp(1, new java.sql.Timestamp(pp.getFechaAlta().getTime()));
 			stmt.setInt(2, pp.getCantMaximaSocio());
 			stmt.setInt(3, pp.getCantMaximaNoSocio());
 			stmt.executeUpdate();

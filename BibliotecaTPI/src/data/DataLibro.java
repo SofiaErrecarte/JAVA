@@ -60,16 +60,15 @@ public class DataLibro {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"INSERT INTO `biblioteca`.`libro` ( `titulo`, `isbn`, `nroEdicion`, `cantDiasMaxPrestamo`, `genero`) VALUES(?,?,?,?,?)",
+							"INSERT INTO `biblioteca`.`libro` ( `titulo`, `isbn`, `nroEdicion`, `cantDiasMaxPrestamo`, `genero`, `fechaEdicion`) VALUES(?,?,?,?,?, ?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, lib.getTitulo());
 			stmt.setLong(2, lib.getIsbn());
-			//stmt.setTimestamp(2, new java.sql.Timestamp(lib.getFechaEdicion().getTime()));
-			//stmt.setDate(3, (java.sql.Date) (lib.getFechaEdicion()));
 			stmt.setLong(3, lib.getNroEdicion());
 			stmt.setLong(4, lib.getCantDiasMaxPrestamo());
-			stmt.setString(5, lib.getGenero());			
+			stmt.setString(5, lib.getGenero());	
+			stmt.setTimestamp(6, new java.sql.Timestamp(lib.getFechaEdicion().getTime()));
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
@@ -106,7 +105,7 @@ public class DataLibro {
 				l.setIdLibro(rs.getInt("idLibro"));
 				l.setIsbn(rs.getInt("isbn"));
 				l.setTitulo(rs.getString("titulo"));
-				//l.setFechaEdicion(rs.getString("fechaEdicion"));
+				l.setFechaEdicion(rs.getDate("fechaEdicion"));
 				l.setNroEdicion(rs.getInt("nroEdicion"));
 				l.setCantDiasMaxPrestamo(rs.getInt("cantDiasMaxPrestamo"));
 				l.setGenero(rs.getString("genero"));
@@ -133,15 +132,17 @@ public class DataLibro {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"UPDATE `biblioteca`.`libro` SET `titulo` = ?, `isbn` = ?, `nroEdicion` = ?, `cantDiasMaxPrestamo` = ?, `genero` = ? WHERE (`idLibro` = ?);",
+							"UPDATE `biblioteca`.`libro` SET `titulo` = ?, `isbn` = ?, `nroEdicion` = ?, `cantDiasMaxPrestamo` = ?, `genero` = ?, `fechaEdicion` = ? WHERE (`idLibro` = ?);",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setString(1, lib.getTitulo());
 			stmt.setLong(2, lib.getIsbn());
 			stmt.setLong(3, lib.getNroEdicion());
 			stmt.setLong(4, lib.getCantDiasMaxPrestamo());
-			stmt.setString(5, lib.getGenero());		
-			stmt.setInt(6,  lib.getIdLibro());
+			stmt.setString(5, lib.getGenero());	
+			stmt.setTimestamp(6, new java.sql.Timestamp(lib.getFechaEdicion().getTime()));
+			
+			stmt.setInt(7,  lib.getIdLibro());
 			stmt.executeUpdate();
 			
 		}  catch (SQLException e) {
@@ -184,6 +185,8 @@ public class DataLibro {
 		return lib;
 	}
 	
+	//EJEMPLAR
+	
 	public LinkedList<Ejemplar> getAllEjemplares(){
 		Statement stmt=null;
 		ResultSet rs=null;
@@ -191,14 +194,14 @@ public class DataLibro {
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select idEjemplar, idLibro, idLineaPrestamo from ejemplar");
+			rs= stmt.executeQuery("select idEjemplar, idLibro, estado from ejemplar");
 			//intencionalmente no se recupera la password
 			if(rs!=null) {
 				while(rs.next()) {
 					Ejemplar ej = new Ejemplar();
 					ej.setIdEjemplar(rs.getInt("idEjemplar"));
 					ej.setIdLibro(rs.getInt("idLibro"));
-					ej.setIdLineaPrestamo(rs.getInt("idLineaPrestamo"));
+					ej.setEstado(rs.getBoolean("estado"));
 					ejemplares.add(ej);
 				}
 			}
@@ -227,7 +230,7 @@ public class DataLibro {
 		LinkedList<Ejemplar> ejemplares = new LinkedList<>();
 		try {
 			stmt=DbConnector.getInstancia().getConn().prepareStatement(
-					"select idEjemplar,idLibro,idLineaPrestamo from ejemplar where idLibro=?"
+					"select idEjemplar,idLibro,estado from ejemplar where idLibro=?"
 					);
 			stmt.setLong(1, lib.getIdLibro());
 			rs=stmt.executeQuery();
@@ -236,7 +239,7 @@ public class DataLibro {
 				ej = new Ejemplar();
 				ej.setIdEjemplar(rs.getInt("idEjemplar"));
 				ej.setIdLibro(rs.getInt("idLibro"));
-				ej.setIdLineaPrestamo(rs.getInt("idLineaPrestamo"));
+				ej.setEstado(rs.getBoolean("estado"));
 				ejemplares.add(ej);
 			}}
 		} catch (SQLException e) {
@@ -260,10 +263,11 @@ public class DataLibro {
 		try {
 			stmt=DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"INSERT INTO `biblioteca`.`ejemplar` ( `idLibro`) VALUES(?)",
+							"INSERT INTO `biblioteca`.`ejemplar` ( `idLibro`,`estado` ) VALUES(?, ?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			stmt.setLong(1, ej.getIdLibro());
+			stmt.setBoolean(2,  ej.getEstado());
 
             stmt.executeUpdate();
 			
