@@ -12,7 +12,7 @@ public class MenuLibro {
 	Scanner s=null;
 	LibroController ctrlLibro = new LibroController();
 	ProveedorController ctrlProv = new ProveedorController();
-	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd0");
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public void start() {
 		s = new Scanner(System.in);
@@ -103,12 +103,19 @@ public class MenuLibro {
 		lib.setIsbn(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese el título: ");
 		lib.setTitulo(s.nextLine());
-		/*System.out.print("Ingrese la nueva fecha de edición: ");
-		try {
-			lib.setFechaEdicion(formato.parse(s.nextLine()));
+		System.out.print("Ingrese la nueva fecha de edición: ");
+		/*try {
+			java.sql.Date fecha = (java.sql.Date) formato.parse(s.nextLine());
+			lib.setFechaEdicion(fecha);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		} */
+		}*/
+		try {
+			java.util.Date fecha=formato.parse(s.nextLine());
+			lib.setFechaEdicion(fecha);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		System.out.print("Ingrese el nuevo número de edición: ");
 		lib.setNroEdicion(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese la nueva cantidad de días máxima de préstamo : ");
@@ -164,12 +171,18 @@ public class MenuLibro {
 		lib.setIsbn(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese el título: ");
 		lib.setTitulo(s.nextLine());
-		/*System.out.print("Ingrese la fecha de edición: ");
-		try {
+		System.out.print("Ingrese la fecha de edición: ");
+		/*try {
 			lib.setFechaEdicion(formato.parse(s.nextLine()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}*/
+		try {
+			java.util.Date fecha=formato.parse(s.nextLine());
+			lib.setFechaEdicion(fecha);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		System.out.print("Ingrese el número de edición: ");
 		lib.setNroEdicion(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese la cantidad de días máxima de préstamo : ");
@@ -223,10 +236,13 @@ public class MenuLibro {
 			l = ctrlLibro.getByIdLibro(l);
 		}
 		ej.setIdLibro(l.getIdLibro());
+		ej.setEstado(true);
 		ctrlLibro.newEjemplar(ej);
 		System.out.println("Ejemplar agregado con exito!");
 		return ej;
 	}
+	
+	
 	private void deleteEjemplar() {
 		System.out.println();
 		Ejemplar ej = new Ejemplar();

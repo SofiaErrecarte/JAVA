@@ -1,8 +1,9 @@
 package ui;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.Scanner;
-
 import entities.*;
 import logic.*;
 
@@ -10,6 +11,7 @@ import logic.*;
 public class MenuPolitica {
 	Scanner s=null;
 	PoliticaPrestamoController ctrlPP = new PoliticaPrestamoController();
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public void start() {
 		s = new Scanner(System.in);
@@ -64,24 +66,19 @@ public class MenuPolitica {
 	}
 	private PoliticaPrestamo newPolitica() {
 		System.out.println();
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
 		PoliticaPrestamo pp = new PoliticaPrestamo();
-		//System.out.print("Ingrese el id: ");
-		//pp.setIdPoliticaPrestamo(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese el número máximo de libros que puede retirar el socio: ");
 		pp.setCantMaximaSocio(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese el número máximo de libros que puede retirar el no socio: ");
 		pp.setCantMaximaNoSocio(Integer.parseInt(s.nextLine()));
 		System.out.println("Ingrese la fecha de hoy: yyyy-mm-dd");
 		try {
-			pp.setFechaAlta((java.sql.Date) formato.parse(s.nextLine()));
+			java.util.Date fecha2=formato.parse(s.nextLine());
+			pp.setFechaAlta(fecha2);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		} 
-		
-	
-		
-		
+		}
+				
 		/*String date_c = s.nextLine();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
