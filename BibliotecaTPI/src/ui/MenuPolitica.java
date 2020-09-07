@@ -71,13 +71,13 @@ public class MenuPolitica {
 		pp.setCantMaximaSocio(Integer.parseInt(s.nextLine()));
 		System.out.print("Ingrese el número máximo de libros que puede retirar el no socio: ");
 		pp.setCantMaximaNoSocio(Integer.parseInt(s.nextLine()));
-		System.out.println("Ingrese la fecha de hoy: yyyy-mm-dd");
+		/*System.out.println("Ingrese la fecha de hoy: yyyy-mm-dd");
 		try {
 			java.util.Date fecha2=formato.parse(s.nextLine());
 			pp.setFechaAlta(fecha2);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		}
+		}*/
 				
 		/*String date_c = s.nextLine();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
