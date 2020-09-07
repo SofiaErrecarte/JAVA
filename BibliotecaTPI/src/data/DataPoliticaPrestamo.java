@@ -2,6 +2,7 @@ package data;
 
 
 import java.util.LinkedList;
+import java.util.Date;
 import entities.*;
 
 import java.sql.*;
@@ -57,6 +58,8 @@ public class DataPoliticaPrestamo {
 							);
 			//stmt.setDate(1, (Date) pp.getFechaAlta());
 			stmt.setTimestamp(1, new java.sql.Timestamp(pp.getFechaAlta().getTime()));
+			/*java.util.Date d = new Date();   -- Probar
+			stmt.setTimestamp(1, (Timestamp) d);*/
 			stmt.setInt(2, pp.getCantMaximaSocio());
 			stmt.setInt(3, pp.getCantMaximaNoSocio());
 			stmt.executeUpdate();
@@ -125,13 +128,13 @@ public class DataPoliticaPrestamo {
 							);
 			stmt.setInt(1,pp.getCantMaximaSocio());
 			stmt.setInt(2,pp.getCantMaximaNoSocio());
-			stmt.setDate(3,(Date) pp.getFechaAlta());
+			stmt.setInt(3, pp.getIdPoliticaPrestamo());
 			stmt.executeUpdate();
 			
-			keyResultSet=stmt.getGeneratedKeys();
+			/*keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
                 pp.setIdPoliticaPrestamo(keyResultSet.getInt(1));
-            }
+            }*/
 
 			
 		}  catch (SQLException e) {
