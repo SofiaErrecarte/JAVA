@@ -57,9 +57,9 @@ public class DataPoliticaPrestamo {
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			//stmt.setDate(1, (Date) pp.getFechaAlta());
-			stmt.setTimestamp(1, new java.sql.Timestamp(pp.getFechaAlta().getTime()));
-			/*java.util.Date d = new Date();   -- Probar
-			stmt.setTimestamp(1, (Timestamp) d);*/
+			//stmt.setTimestamp(1, new java.sql.Timestamp(pp.getFechaAlta().getTime()));
+			java.util.Date d = new Date();   //-- Probar
+			stmt.setTimestamp(1, new java.sql.Timestamp(d.getTime()));
 			stmt.setInt(2, pp.getCantMaximaSocio());
 			stmt.setInt(3, pp.getCantMaximaNoSocio());
 			stmt.executeUpdate();
